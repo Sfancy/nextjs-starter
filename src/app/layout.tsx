@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import '@radix-ui/themes/styles.css';
+import './globals.css';
+import { Container, Theme } from '@radix-ui/themes';
+import Header from '@/components/ui/Header';
+import { SWRProvider } from '@/services/SwrProvider';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Theme>
+          <Header title={metadata.title as string} />
+          <main className="pt-4">
+            <Container size={{ xs: '1', sm: '2', md: '3', lg: '4' }}>
+              <SWRProvider>{children}</SWRProvider>
+            </Container>
+          </main>
+        </Theme>
+      </body>
     </html>
   );
 }
